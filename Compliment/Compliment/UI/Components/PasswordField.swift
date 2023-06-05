@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PasswordField: View {
     @State private var isSecured = true
-    @State var password: String = ""
+    @Binding var password: String
     
     var body: some View {
         VStack {
@@ -37,8 +37,8 @@ struct PasswordField: View {
     }
 }
 
-struct PasswordField_Previews: PreviewProvider {
-    static var previews: some View {
-        PasswordField()
-    }
-}
+//struct PasswordField_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PasswordField()
+//    }
+//}

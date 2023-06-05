@@ -9,16 +9,17 @@ import Foundation
 import Alamofire
 
 protocol RequestBuilderProtocol: URLRequestConvertible {
-    var baseURL: URL { get }
-    var path: String { get }
+    var baseURL: String { get }
+    var fulURL: URL { get }
+    var headers: HTTPHeaders? { get }
     var parameters: Parameters? { get }
     var method: HTTPMethod { get }
     var encoding: ParameterEncoding { get }
 }
 
 extension RequestBuilderProtocol {
-    var baseURL: URL {
-        return URL(string: APIEnvironment.development.baseURL())!
+    var baseURL: String {
+        return APIEnvironment.development.baseURL()
     }
     
     var encoding: ParameterEncoding {
@@ -30,14 +31,10 @@ extension RequestBuilderProtocol {
         }
     }
     
-    var headers: HTTPHeaders {
-        return HTTPHeaders()
-    }
-    
     func asURLRequest() throws -> URLRequest {
-        var request = URLRequest(url: baseURL)
+        var request = URLRequest(url: fulURL)
         request.method = method
-        headers.forEach {
+        headers?.forEach {
             request.addValue($0.value, forHTTPHeaderField: $0.name)
         }
         return try encoding.encode(request, with: parameters)

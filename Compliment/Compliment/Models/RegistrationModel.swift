@@ -8,28 +8,32 @@
 import Foundation
 import Alamofire
 
-struct RegistrationRequestModel: Codable {
+protocol Parameterizable {
+    var toParameters: Parameters? { get }
+}
+
+struct RegistrationRequestModel: Codable, Parameterizable {
     var username: String
     var email: String
     var password: String
-    var name: String? = nil
-    var last_name: String? = nil
-    var birthday: String? = nil
     
-    var toParameters: Parameters {
+    var toParameters: Parameters? {
         let params = [
             "username" : username,
             "email": email,
-            "password": password,
-            "name": name ?? "",
-            "last_name": last_name ?? "",
-            "birthday":  birthday ?? ""
+            "password": password
         ]
         return params
     }
 }
 
 struct RegistrationResponseModel: Codable {
+    var instance: InstanceModel
+    var access: String
+    var refresh: String
+}
+
+struct InstanceModel: Codable {
     var username: String
     var name: String?
     var last_name: String?

@@ -14,11 +14,11 @@ struct RegistrationView: View {
         VStack {
             TitleView(with: "Create account")
             // TODO: будет ли так работать?
-            InputField(placeholder: "Username", text: viewModel.username)
-            InputField(placeholder: "Email", text: viewModel.email)
+            InputField(placeholder: "Username", text: $viewModel.username)
+            InputField(placeholder: "Email", text: $viewModel.email)
                 .textInputAutocapitalization(.never)
                 .keyboardType(.emailAddress)
-            PasswordField(password: viewModel.password)
+            PasswordField(password: $viewModel.password)
             
             Button("Sign up") {
                 viewModel.registrate()
@@ -28,8 +28,8 @@ struct RegistrationView: View {
     }
 }
 
-struct RegistrationView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegistrationView(viewModel: RegistrationViewModel())
-    }
-}
+//struct RegistrationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RegistrationView(viewModel: RegistrationViewModel())
+//    }
+//}

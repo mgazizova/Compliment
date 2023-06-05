@@ -8,15 +8,22 @@
 import Foundation
 import Alamofire
 
-enum RegistrationAPI: RequestBuilderProtocol {
+enum RegistrationAPI: RequestBuilderProtocol {    
     case register(params: RegistrationRequestModel)
 }
 
 extension RegistrationAPI {
-    var path: String {
+    var fulURL: URL {
         switch self {
         case .register:
-            return "\(baseURL)/user"
+            return URL(string: "\(baseURL)/user/")!
+        }
+    }
+    
+    var headers: HTTPHeaders? {
+        switch self {
+        case .register:
+            return nil
         }
     }
     

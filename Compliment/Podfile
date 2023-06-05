@@ -7,4 +7,5 @@ target 'Compliment' do
 
   # Pods for Compliment
   pod 'Alamofire'
+  pod 'KeychainAccess'
 end

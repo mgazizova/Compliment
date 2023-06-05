@@ -10,7 +10,7 @@ import SwiftUI
 struct InputField: View {
     let placeholder: String?
     // TODO: скорее всего поменять на viewModel
-    @State var text: String = ""
+    @Binding var text: String
     
     var body: some View {
         VStack {
@@ -22,8 +22,8 @@ struct InputField: View {
     }
 }
 
-struct InputField_Previews: PreviewProvider {
-    static var previews: some View {
-        InputField(placeholder: "Placeholder", text: "text")
-    }
-}
+//struct InputField_Previews: PreviewProvider {
+//    static var previews: some View {
+//        InputField(placeholder: "Placeholder", text: "text")
+//    }
+//}

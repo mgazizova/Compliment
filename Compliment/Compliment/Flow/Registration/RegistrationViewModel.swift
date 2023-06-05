@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import KeychainAccess
 
 class RegistrationViewModel: ObservableObject {
     @Published var username: String = ""
@@ -14,14 +15,16 @@ class RegistrationViewModel: ObservableObject {
     @Published var password: String = ""
     
     private var networkService: NetworkServiceProtocol
+//    private var coordinator: any RegistrationCoordinating
     private var cancellable = Set<AnyCancellable>()
 
     init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
+//        self.coordinator = coordinator
     }
     
     func registrate() {
-        self.networkService
+        networkService
             .execute(RegistrationAPI.register(params: RegistrationRequestModel(username: self.username,
                                                                                email: self.email,
                                                                                password: self.password)),
@@ -30,10 +33,18 @@ class RegistrationViewModel: ObservableObject {
                 
                 switch result {
                 case .success(let response):
-                    print("success, \(response)")
+                    self.saveSensitiveInfo(from: response)
+//                    self.coordinator.route(to: <#T##RegistrationRoute#>)
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }.store(in: &cancellable)
+    }
+}
+
+extension RegistrationViewModel {
+    private func saveSensitiveInfo(from response: RegistrationResponseModel) {
+        KeychainService.shared.save(response.access, key: .access)
+        KeychainService.shared.save(response.refresh, key: .refresh)
     }
 }
